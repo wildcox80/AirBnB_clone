@@ -1,5 +1,5 @@
 <h1 align="center">Sorting_Algorithms</h1>
-<p align="center"> <img src = "https://imgur.com/cJ19QJ9" /></p>
+<p align="center"> <img src = "https://i.imgur.com/cJ19QJ9.png" /></p>
 
 
 ## Background Context :floppy_disk:
@@ -157,7 +157,7 @@ EOF  help  quit
 $
 ```
 
-<p align="center"> <img src = "https://imgur.com/WsiEC4F" /></p>
+<p align="center"> <img src = "https://i.imgur.com/WsiEC4F.png" /></p>
 
 ## Task :notebook:
 
