@@ -1,4 +1,4 @@
-<h1 align="center">Sorting_Algorithms</h1>
+<h1 align="center">0x00. AirBnB clone - The console</h1>
 <p align="center"> <img src = "https://i.imgur.com/cJ19QJ9.png" /></p>
 
 
