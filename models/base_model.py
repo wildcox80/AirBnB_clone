@@ -1,4 +1,4 @@
-# /usr/bin/python3
+#!/usr/bin/python3
 """ Modules for Class """
 from datetime import datetime
 from uuid import uuid4
@@ -7,10 +7,20 @@ from uuid import uuid4
 class BaseModel:
     """Class Base Model"""
 
-    def __init__(self):
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+    def __init__(self, *args, **kargs):
+        """ Constructor Method """
+
+        if not kargs:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
+
+        else: 
+            for attr_name, attr in kwargs.items():
+                if attr_name == "created_at" or attr_name == "updated_at":
+                    attr = datetime.strptime(attr, "%Y-%m-%dT%H:%M:%S.%f")
+                if attr_name != "__class__":
+                    setattr(self, attr_name, attr)
 
     def __str__(self):
         """ String Method """
