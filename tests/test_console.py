@@ -1,28 +1,27 @@
 #!/usr/bin/python3
 """Unittest for Console"""
 
-from console import HBNBCommand
-import sys
 import unittest
-from unittest.mock import create_autospec
+import console
+from console import HBNBCommand
 
 
 class TestConsole(unittest.TestCase):
     """Console Unittest"""
 
-    def setUp(self):
-        """Sets up STDIN and STDOUT"""
-        self.mock_stdin = create_autospec(sys.stdin)
-        self.mock_stdout = create_autospec(sys.stdout)
+    def create(self):
+        """ Create instance command line """
+        return HBNBCommand()
 
-    def create(self, server=None):
+    def test_quit(self, server=None):
         """Creates HBNBCommand"""
-        return HBNBCommand(stdin=self.mock_stdin, stdout=self.mock_stdout)
+        con = self.create()
+        self.assertTrue(con.onecmd("quit"))
 
-    def test_quit(self):
+    def test_EOF(self):
         """Tests the quit command"""
-        xit = self.create()
-        self.assertTrue(xit.onecmd("quit"))
+        con = self.create()
+        self.assertTrue(con.onecmd("EOF"))
 
 
 if __name__ == '__main__':
