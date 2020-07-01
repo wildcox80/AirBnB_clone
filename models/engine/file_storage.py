@@ -29,12 +29,9 @@ class FileStorage:
             json.dump(new_dict, new_file)
 
     def reload(self):
-        """Deserializes the JSON file to __objects
-        only if the JSON file exists; otherwise, do nothing
-        """
-        reload_dict = {}
+        """ Reload File Json """
         try:
-            with open(FileStorage.__file_path, mode="r") as a_file:
+            with open(FileStorage.__file_path, 'r', encoding="utf-8") as file_json:
                 from models.base_model import BaseModel
                 from models.user import User
                 from models.place import Place
@@ -42,9 +39,9 @@ class FileStorage:
                 from models.city import City
                 from models.amenity import Amenity
                 from models.review import Review
-                reload_dict = (json.load(a_file))
-                for key, value in reload_dict.items():
-                    obj = eval(value['__class__'])(**value)
-                    self.__objects[key] = obj
-        except FileNotFoundError:
+                json_des = json.load(file_json)
+            for key, value in json_des.items():
+                value = eval(value["__class__"])(**value)
+                FileStorage.__objects[key] = value
+        except OSError:
             pass
