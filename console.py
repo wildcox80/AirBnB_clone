@@ -116,6 +116,7 @@ class HBNBCommand(cmd.Cmd):
         command = ""
         x = 0
 
+        # noinspection PyBroadException
         try:
             while sep[1][x] != '(':
                 command += sep[1][x]
