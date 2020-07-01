@@ -23,7 +23,6 @@ class BaseModel:
         else:
             self.id = str(uuid.uuid4())
             self.created_at = self.updated_at = datetime.now()
-            models.storage.new(self)
 
     def __str__(self):
         """ Return the human readable print format"""
@@ -33,11 +32,9 @@ class BaseModel:
     def save(self):
         """Shows the newly updated time from time of instance creation"""
         self.updated_at = datetime.now()
-        models.storage.new(self)
-        models.storage.save()
 
     def to_dict(self):
-        """Returns a dictionay containing all keys/values"""
+        """Returns a dictionary containing all keys/values"""
         my_dict = {}
         for key, item in self.__dict__.items():
             if key in ['created_at', 'updated_at']:
