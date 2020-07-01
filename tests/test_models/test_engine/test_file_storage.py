@@ -1,59 +1,77 @@
 #!/usr/bin/python3
-"""Module for test file storage"""
-from unittest import TestCase
+"""File Storage Unit Tests"""
+
+
+from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
-from tests.test_models.test_class import TestClassDocumentation
+from datetime import datetime
+import models
 import os
 import sys
+import pep8
+import unittest
 
 
-class TestFileStorage(TestCase):
-    """Test cases for File Storage"""
+class TestFileStorage(unittest.TestCase):
+    """
+    Test cases for class FileStorage
+    """
+    def test_docstring(self):
+        """Checks if docstring exist"""
 
-    def test_code_review(self):
-        """Test documentation and pep8"""
-        t = TestClassDocumentation(self, FileStorage)
-        t.documentation()
-        t.pep8(['models/engine/file_storage.py',
-                'tests/test_models/test_engine/test_file_storage.py'])
+        self.assertTrue(len(FileStorage.__doc__) > 1)
+        self.assertTrue(len(FileStorage.all.__doc__) > 1)
+        self.assertTrue(len(FileStorage.new.__doc__) > 1)
+        self.assertTrue(len(FileStorage.save.__doc__) > 1)
+        self.assertTrue(len(FileStorage.reload.__doc__) > 1)
 
-    def test_init(self):
-        """Test constructor"""
-        f = FileStorage()
-        obj, path = f._FileStorage__objects, f._FileStorage__file_path
+    def test_pep8(self):
+        """Pep8 Test"""
 
-        self.assertIsInstance(obj, dict)
-        self.assertIsInstance(path, str)
+        style = pep8.StyleGuide(quiet=True)
+        result = style.check_files(['models/engine/file_storage.py'])
+        self.assertEqual(result.total_errors, 0, "fix pep8")
 
-    def test_functions(self):
-        """Checks if the functions are defined"""
-        f = FileStorage()
+    def setUp(self):
+        """Sets up the testing environment to not change the
+        previous file storage
+        """
 
-        self.assertTrue(hasattr(f, 'all'))
-        self.assertTrue(hasattr(f, 'new'))
-        self.assertTrue(hasattr(f, 'reload'))
-        self.assertTrue(hasattr(f, 'save'))
+        self.file_path = models.storage._FileStorage__file_path
+        if os.path.exists(self.file_path):
+            os.rename(self.file_path, 'test_storage')
+
+    def tearDown(self):
+        """ Removes the JSON file after test cases run """
+
+        if os.path.exists(self.file_path):
+            os.remove(self.file_path)
+        if os.path.exists('test_storage'):
+            os.rename('test_storage', self.file_path)
+
+    def test_instantiation(self):
+        """Tests for proper instantiation"""
+
+        temp_storage = FileStorage()
+        self.assertIsInstance(temp_storage, FileStorage)
+
+    def test_saves_new_instance(self):
+        """Tests if file is being created """
+
+        b1 = BaseModel()
+        models.storage.new(b1)
+        models.storage.save()
+        file_exist = os.path.exists(self.file_path)
+        self.assertTrue(file_exist)
 
     def test_all(self):
-        """Test method all"""
-        f = FileStorage()
+        """Tests the all method"""
 
-        self.assertIsInstance(f.all(), dict)
+        temp_storage = FileStorage()
+        temp_dict = temp_storage.all()
+        self.assertIsNotNone(temp_dict)
+        self.assertEqual(type(temp_dict), dict)
 
-    def test_example(self):
-        """Checks the methods reload and save"""
-        # Needs to be implemented
-        from models import storage
-        from models.base_model import BaseModel
 
-        f = FileStorage()
-        all_objs = storage.all()
-        status = os.path.exists(f._FileStorage__file_path)
-        self.assertTrue(status)
-
-        print("-- Create a new object --")
-        my_model = BaseModel()
-        my_model.name = "Holberton"
-        my_model.my_number = 89
-        my_model.save()
-        print(my_model)
+if __name__ == '__main__':
+    unittest.main()
