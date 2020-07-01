@@ -88,8 +88,8 @@ class TestBaseModel(unittest.TestCase):
         """testing datetime base model"""
         model_3 = BaseModel()
         model_4 = BaseModel()
-        self.assertNotEqual(model_3.created_at, model_3.updated_at)
-        self.assertNotEqual(model_3.created_at, model_4.created_at)
+        self.assertNotEqual(model_3.created_at, model_4.updated_at)
+        self.assertNotEqual(model_4.created_at, model_3.updated_at)
 
     def test_string_representation(self):
         """Test the magic method str"""
