@@ -32,15 +32,6 @@ class TestBaseModel(unittest.TestCase):
         """
         pass
 
-    def tearDown(self):
-        """
-        Resets tests
-        """
-        try:
-            return os.remove("file.json")
-        finally:
-            pass
-
     def test_init_arg(self):
         """Pass an arg into the instance"""
         b1 = BaseModel(12)
@@ -97,17 +88,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(hasattr(b1, "created_at"))
         self.assertTrue(hasattr(b1, "updated_at"))
         self.assertTrue(hasattr(b1, "id"))
-
-    def test_save(self):
-        """Test save method"""
-        obj = BaseModel()
-        sleep(1)
-
-        now = datetime.now().replace(microsecond=0)
-        obj.save()
-
-        self.assertEqual(obj.updated_at.replace(microsecond=0),
-                         now)
 
 
 if __name__ == '__main__':

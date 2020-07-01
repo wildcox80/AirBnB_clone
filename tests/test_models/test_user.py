@@ -33,15 +33,6 @@ class TestUser(unittest.TestCase):
         """
         pass
 
-    def tearDown(self):
-        """
-        Resets tests
-        """
-        try:
-            return os.remove("file.json")
-        finally:
-            pass
-
     def test_init_arg(self):
         """pass in arg to new instance"""
         b1 = User(23)

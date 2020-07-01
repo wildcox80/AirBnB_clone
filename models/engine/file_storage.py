@@ -41,7 +41,7 @@ class FileStorage:
         """
         reload_dict = {}
         try:
-            with open(FileStorage.__file_path, mode="r", encoding='utf-8') as a_file:
+            with open(FileStorage.__file_path, mode="r") as a_file:
                 reload_dict = (json.load(a_file))
                 for key, value in reload_dict.items():
                     obj = eval(value['__class__'])(**value)
