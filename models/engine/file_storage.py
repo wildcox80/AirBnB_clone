@@ -23,28 +23,27 @@ class FileStorage:
 
     def new(self, obj):
         """Returns __objects with obj set as key"""
-        key = '{}.{}'.format(obj.__class__.__name__, obj.id)
-        self.__objects[key] = obj
+        key = "{}.{}".format(obj.__class__.__name__, obj.id)
+        FileStorage.__objects[key] = obj
 
     def save(self):
         """Serializes __objects to JSON file inside"""
-        save_file = self.__file_path
         new_dict = {}
-        for key, item in self.__objects.items():
-            new_dict[key] = item.to_dict()
-        with open(save_file, mode="w", encoding='utf-8') as new_file:
-            json.dump(new_dict, new_file)
+        for key, item in FileStorage.__objects.items():
+            new_dict[key] = item.to_dict().copy()
+        with open(FileStorage.__file_path, mode="w") as file:
+            json.dump(new_dict, file)
 
     def reload(self):
         """Deserializes the JSON file to __objects
         only if the JSON file exists; otherwise, do nothing
         """
-        reload_dict = {}
         try:
-            with open(FileStorage.__file_path, mode="r") as a_file:
-                reload_dict = (json.load(a_file))
-                for key, value in reload_dict.items():
-                    obj = eval(value['__class__'])(**value)
-                    self.__objects[key] = obj
+            with open(FileStorage.__file_path, mode="r") as file:
+                new_dict = (json.load(file))
+                for key, value in new_dict.items():
+                    class_name = value.get('__class__')
+                    obj = eval(class_name + '(**value)')
+                    FileStorage.__objects[key] = obj
         except FileNotFoundError:
             pass
