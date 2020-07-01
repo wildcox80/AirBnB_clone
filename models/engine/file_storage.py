@@ -35,6 +35,13 @@ class FileStorage:
         reload_dict = {}
         try:
             with open(FileStorage.__file_path, mode="r") as a_file:
+                from models.base_model import BaseModel
+                from models.user import User
+                from models.place import Place
+                from models.state import State
+                from models.city import City
+                from models.amenity import Amenity
+                from models.review import Review
                 reload_dict = (json.load(a_file))
                 for key, value in reload_dict.items():
                     obj = eval(value['__class__'])(**value)
