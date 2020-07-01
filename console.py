@@ -7,11 +7,11 @@ class HBNBCommand(cmd.Cmd):
     """Console AIRBNB"""
     prompt = "(hbnb) "
 
-    def do_quit(self):
+    def do_quit(self, line):
         """Quit command to exit the console\n"""
         return True
 
-    def do_EOF(self):
+    def do_EOF(self, line):
         """EOF command to exit the console\n"""
         return True
 
