@@ -1,103 +1,94 @@
 #!/usr/bin/python3
-"""
-Unittest for base_model
-"""
-
-import unittest
+"""Module for test base_model"""
+from .test_class import TestClassDocumentation
+from datetime import datetime
 from models.base_model import BaseModel
-import pep8
+from time import sleep
+from unittest import TestCase
+import uuid
 
 
-class TestBaseModel(unittest.TestCase):
-    """
-    Test class BaseModel
-    """
+class TestBaseModel(TestCase):
+    """Test cases for Base model"""
 
-    def test_docstring(self):
-        """Checks if the docstring exists"""
-        self.assertTrue(len(BaseModel.__doc__) > 1)
-        self.assertTrue(len(BaseModel.__init__.__doc__) > 1)
-        self.assertTrue(len(BaseModel.__str__.__doc__) > 1)
-        self.assertTrue(len(BaseModel.save.__doc__) > 1)
-        self.assertTrue(len(BaseModel.to_dict.__doc__) > 1)
+    def test_code_review(self):
+        """Test documentation and pep8"""
+        t = TestClassDocumentation(self, BaseModel)
+        t.documentation()
+        t.pep8(['models/base_model.py',
+                'tests/test_models/test_base_model.py'])
 
-    def test_pep8(self):
-        """Pep8 Test"""
-        style = pep8.StyleGuide(quiet=True)
-        result = style.check_files(['models/base_model.py',
-                                    'tests/test_models/test_base_model.py'])
-        self.assertEqual(result.total_errors, 0, "fix pep8")
+    def test_init(self):
+        """Test constructor of base model"""
+        obj = BaseModel()
+        now = datetime.now().replace(microsecond=0)
 
-    def setUp(self):
-        """
-        Setups test
-        """
-        pass
+        self.assertIsInstance(obj, BaseModel)
+        self.assertIsInstance(str(obj), str)
+        self.assertIsInstance(obj.id, str)
+        self.assertIsInstance(obj.updated_at, datetime)
+        self.assertIsInstance(obj.created_at, datetime)
+        self.assertEqual(obj.created_at.replace(microsecond=0), now)
+        self.assertEqual(obj.updated_at.replace(microsecond=0), now)
 
-    def test_init_arg(self):
-        """Pass an arg into the instance"""
-        b1 = BaseModel(12)
-        self.assertEqual(type(b1).__name__, "BaseModel")
-        self.assertFalse(hasattr(b1, "12"))
-
-    def test_init_kwarg(self):
-        """Pass kwargs into the instance"""
-        b1 = BaseModel(name="Red")
-        self.assertEqual(type(b1).__name__, "BaseModel")
-        self.assertTrue(hasattr(b1, "name"))
-        self.assertTrue(hasattr(b1, "__class__"))
-        self.assertFalse(hasattr(b1, "id"))
-        self.assertFalse(hasattr(b1, "created_at"))
-        self.assertFalse(hasattr(b1, "updated_at"))
-
-    def test_str_method(self):
-        """Tests to see if the method is printing accurately"""
-        b1 = BaseModel()
-        b1printed = b1.__str__()
-        self.assertEqual(b1printed,
-                         "[BaseModel] ({}) {}".format(b1.id, b1.__dict__))
-
-    def test_before_to_dict(self):
-        """Tests the instance before using the todict conversion"""
-        b1 = BaseModel()
-        b1_dict = b1.__dict__
-        self.assertEqual(type(b1).__name__, "BaseModel")
-        self.assertTrue(hasattr(b1, '__class__'))
-        self.assertEqual(str(b1.__class__),
-                         "<class 'models.base_model.BaseModel'>")
-        self.assertTrue(type(b1_dict['created_at']), 'datetime.datetime')
-        self.assertTrue(type(b1_dict['updated_at']), 'datetime.datetime')
-        self.assertTrue(type(b1_dict['id']), 'str')
-
-    def test_after_to_dict(self):
-        """Tests instances after using to_dict conversion"""
+    def test_string_representation(self):
+        """Test the magic method str"""
         my_model = BaseModel()
-        new_model = BaseModel()
-        test_dict = my_model.to_dict()
-        self.assertIsInstance(my_model, BaseModel)
-        self.assertEqual(type(my_model).__name__, "BaseModel")
-        self.assertEqual(test_dict['__class__'], "BaseModel")
-        self.assertTrue(type(test_dict['__class__']), 'str')
-        self.assertTrue(type(test_dict['created_at']), 'str')
-        self.assertTrue(type(test_dict['updated_at']), 'str')
-        self.assertTrue(type(test_dict['id']), 'str')
-        self.assertNotEqual(my_model.id, new_model.id)
+        my_model.name = "Holberton"
+        my_model.my_number = 89
+        id_model = my_model.id
 
-    def test_has_attribute(self):
-        """Tests if the instance of BaseModel have been correctly made"""
-        b1 = BaseModel()
-        self.assertTrue(hasattr(b1, "__init__"))
-        self.assertTrue(hasattr(b1, "created_at"))
-        self.assertTrue(hasattr(b1, "updated_at"))
-        self.assertTrue(hasattr(b1, "id"))
+        expected = '[BaseModel] ({}) {}'\
+                   .format(id_model, my_model.__dict__)
+        self.assertEqual(str(my_model), expected)
+
+    def test_constructor_kwargs(self):
+        """Test constructor that has kwargs as attributes values"""
+        obj = BaseModel()
+        obj.name = "Holberton"
+        obj.my_number = 89
+        json_attributes = obj.to_dict()
+
+        obj2 = BaseModel(**json_attributes)
+
+        self.assertIsInstance(obj2, BaseModel)
+        self.assertIsInstance(json_attributes, dict)
+        self.assertIsNot(obj, obj2)
 
     def test_save(self):
-        """Tests to see if the save function works"""
-        b1 = BaseModel()
-        b1.save()
-        b_dict = b1.to_dict()
-        self.assertNotEqual(b_dict['created_at'], b_dict['updated_at'])
+        """Test save method"""
+        obj = BaseModel()
+        sleep(1)
 
+        now = datetime.now().replace(microsecond=0)
+        obj.save()
+
+        self.assertEqual(obj.updated_at.replace(microsecond=0),
+                         now)
+
+    def test_dictionary(self):
+        """Test to_dict method"""
+        obj = BaseModel()
+        obj.name = "Holberton"
+        obj.my_number = 89
+
+        output = obj.to_dict()
+
+        self.assertIsInstance(output, dict)
+
+        o_id = output['id']
+        updated_at = output['updated_at']
+        created_at = output['created_at']
+        class_name = output['__class__']
+        name = output['name']
+        my_number = output['my_number']
+
+        self.assertIsInstance(o_id, str)
+        self.assertIsInstance(updated_at, str)
+        self.assertIsInstance(created_at, str)
+        self.assertIsInstance(class_name, str)
+        self.assertIsInstance(name, str)
+        self.assertIsInstance(my_number, int)
 
 if __name__ == '__main__':
     unittest.main()
