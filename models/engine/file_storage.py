@@ -2,7 +2,14 @@
 """ Create Class FileStorage """
 import json
 import models
+from models.amenity import Amenity
 from models.base_model import BaseModel
+from models.city import City
+from datetime import datetime
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 
 
 class FileStorage:
@@ -25,23 +32,19 @@ class FileStorage:
         new_dict = {}
         for key, item in self.__objects.items():
             new_dict[key] = item.to_dict()
-        with open(save_file, mode="w", encoding='utf-8') as new_file:
+        with open(save_file, "w", encoding='utf-8') as new_file:
             json.dump(new_dict, new_file)
 
     def reload(self):
-        """ Reload File Json """
+        """Deserializes the JSON file to __objects
+        only if the JSON file exists; otherwise, do nothing
+        """
+        reload_dict = {}
         try:
-            with open(FileStorage.__file_path, 'r', encoding="utf-8") as file_json:
-                from models.base_model import BaseModel
-                from models.user import User
-                from models.place import Place
-                from models.state import State
-                from models.city import City
-                from models.amenity import Amenity
-                from models.review import Review
-                json_des = json.load(file_json)
-            for key, value in json_des.items():
-                value = eval(value["__class__"])(**value)
-                FileStorage.__objects[key] = value
-        except OSError:
+            with open(FileStorage.__file_path, mode="r") as a_file:
+                reload_dict = (json.load(a_file))
+                for key, value in reload_dict.items():
+                    obj = eval(value['__class__'])(**value)
+                    self.__objects[key] = obj
+        except FileNotFoundError:
             pass
