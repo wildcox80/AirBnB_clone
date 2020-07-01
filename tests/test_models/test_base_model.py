@@ -99,11 +99,15 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(hasattr(b1, "id"))
 
     def test_save(self):
-        """Tests to see if the save function works"""
-        b1 = BaseModel()
-        b1.save()
-        b_dict = b1.to_dict()
-        self.assertNotEqual(b_dict['created_at'], b_dict['updated_at'])
+        """Test save method"""
+        obj = BaseModel()
+        sleep(1)
+
+        now = datetime.now().replace(microsecond=0)
+        obj.save()
+
+        self.assertEqual(obj.updated_at.replace(microsecond=0),
+                         now)
 
 
 if __name__ == '__main__':

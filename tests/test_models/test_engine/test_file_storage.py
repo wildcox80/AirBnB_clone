@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """File Storage Unit Tests"""
 
-
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 from datetime import datetime
@@ -37,7 +36,7 @@ class TestFileStorage(unittest.TestCase):
         previous file storage
         """
 
-        self.file_path = models.storage._FileStorage__file_path
+        self.file_path = models.storage._FileStorage.__file_path
         if os.path.exists(self.file_path):
             os.rename(self.file_path, 'test_storage')
 

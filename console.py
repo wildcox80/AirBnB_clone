@@ -21,7 +21,7 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
     group = {'BaseModel', 'User', 'State', 'City',
              'Amenity', 'Place', 'Review'}
-    file_path: storage.__FileStorage__file_path
+    file_path: storage._FileStorage__file_path
     err_list = ["** class name missing **", "** class doesn't exist **",
                 "** instance id missing **", "** no instance found **",
                 "** attribute name missing **", "** value missing **"]
@@ -92,7 +92,7 @@ class HBNBCommand(cmd.Cmd):
         """Function that displays all class instances of given argument or all
         if no argument given"""
         data_dump = models.storage.all()
-        if line is "":
+        if line == "":
             for instance_key, instance_obj in data_dump.items():
                 print(instance_obj)
         else:
