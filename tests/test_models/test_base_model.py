@@ -3,7 +3,6 @@
 Unittest for base_model
 """
 
-
 import unittest
 from models.base_model import BaseModel
 import pep8
@@ -32,6 +31,15 @@ class TestBaseModel(unittest.TestCase):
         Setups test
         """
         pass
+
+    def tearDown(self):
+        """
+        Resets tests
+        """
+        try:
+            return os.remove("file.json")
+        finally:
+            pass
 
     def test_init_arg(self):
         """Pass an arg into the instance"""
