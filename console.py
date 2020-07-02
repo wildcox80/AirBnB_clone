@@ -139,6 +139,293 @@ class HBNBCommand(cmd.Cmd):
             setattr(obj, args[2], args[3].lstrip('"').rstrip('"'))
             models.storage.save()
 
+    def do_User(self, line):
+        """Retrieve all instances of User class.
+        Ex: $ User.all()
+        """
+        objects = models.storage.all()
+        class_name = "User"
+        method = line.split(".")[1].split("(")[0]
+
+        if "(" and ")" in line:
+            if method == "all":
+                HBNBCommand.do_all(HBNBCommand, class_name)
+            elif method == "count":
+                counter = 0
+                for key in objects:
+                    if key.split(".")[0] == class_name:
+                        counter += 1
+                print(counter)
+            elif method == "show":
+                if '"' not in line:
+                    pass
+                else:
+                    obj_id = line.split('"')[1]
+                    key = class_name + "." + obj_id
+                    value = objects.get(key)
+                    if value is None:
+                        print("** no instance found **")
+                    else:
+                        print(value)
+            elif method == "destroy":
+                if '"' not in line:
+                    pass
+                else:
+                    obj_id = line.split('"')[1]
+                    key = class_name + "." + obj_id
+                    value = objects.get(key)
+                    if value is None:
+                        print("** no instance found **")
+                    else:
+                        objects.pop(key, None)
+                        models.storage.save()
+
+    def do_BaseModel(self, line):
+        """Retrieve all instances of BaseModel class.
+        Ex: $ BaseModel.all()
+        """
+        objects = models.storage.all()
+        class_name = "BaseModel"
+        method = line.split(".")[1].split("(")[0]
+
+        if "(" and ")" in line:
+            if method == "all":
+                HBNBCommand.do_all(HBNBCommand, class_name)
+            elif method == "count":
+                counter = 0
+                for key in objects:
+                    if key.split(".")[0] == class_name:
+                        counter += 1
+                print(counter)
+            elif method == "show":
+                if '"' not in line:
+                    pass
+                else:
+                    obj_id = line.split('"')[1]
+                    key = class_name + "." + obj_id
+                    value = objects.get(key)
+                    if value is None:
+                        print("** no instance found **")
+                    else:
+                        print(value)
+            elif method == "destroy":
+                if '"' not in line:
+                    pass
+                else:
+                    obj_id = line.split('"')[1]
+                    key = class_name + "." + obj_id
+                    value = objects.get(key)
+                    if value is None:
+                        print("** no instance found **")
+                    else:
+                        objects.pop(key, None)
+                        models.storage.save()
+
+    def do_Amenity(self, line):
+        """Retrieve all instances of Amenity class.
+        Ex: $ Amenity.all()
+        """
+        objects = models.storage.all()
+        class_name = "Amenity"
+        method = line.split(".")[1].split("(")[0]
+
+        if "(" and ")" in line:
+            if method == "all":
+                HBNBCommand.do_all(HBNBCommand, class_name)
+            elif method == "count":
+                counter = 0
+                for key in objects:
+                    if key.split(".")[0] == class_name:
+                        counter += 1
+                print(counter)
+            elif method == "show":
+                if '"' not in line:
+                    pass
+                else:
+                    obj_id = line.split('"')[1]
+                    key = class_name + "." + obj_id
+                    value = objects.get(key)
+                    if value is None:
+                        print("** no instance found **")
+                    else:
+                        print(value)
+            elif method == "destroy":
+                if '"' not in line:
+                    pass
+                else:
+                    obj_id = line.split('"')[1]
+                    key = class_name + "." + obj_id
+                    value = objects.get(key)
+                    if value is None:
+                        print("** no instance found **")
+                    else:
+                        objects.pop(key, None)
+                        models.storage.save()
+
+    def do_City(self, line):
+        """Retrieve all instances of City class.
+        Ex: $ City.all()
+        """
+        objects = models.storage.all()
+        class_name = "City"
+        method = line.split(".")[1].split("(")[0]
+
+        if "(" and ")" in line:
+            if method == "all":
+                HBNBCommand.do_all(HBNBCommand, class_name)
+            elif method == "count":
+                counter = 0
+                for key in objects:
+                    if key.split(".")[0] == class_name:
+                        counter += 1
+                print(counter)
+            elif method == "show":
+                if '"' not in line:
+                    pass
+                else:
+                    obj_id = line.split('"')[1]
+                    key = class_name + "." + obj_id
+                    value = objects.get(key)
+                    if value is None:
+                        print("** no instance found **")
+                    else:
+                        print(value)
+            elif method == "destroy":
+                if '"' not in line:
+                    pass
+                else:
+                    obj_id = line.split('"')[1]
+                    key = class_name + "." + obj_id
+                    value = objects.get(key)
+                    if value is None:
+                        print("** no instance found **")
+                    else:
+                        objects.pop(key, None)
+                        models.storage.save()
+
+    def do_Place(self, line):
+        """Retrieve all instances of Place class.
+        Ex: $ Place.all()
+        """
+        objects = models.storage.all()
+        class_name = "Place"
+        method = line.split(".")[1].split("(")[0]
+
+        if "(" and ")" in line:
+            if method == "all":
+                HBNBCommand.do_all(HBNBCommand, class_name)
+            elif method == "count":
+                counter = 0
+                for key in objects:
+                    if key.split(".")[0] == class_name:
+                        counter += 1
+                print(counter)
+            elif method == "show":
+                if '"' not in line:
+                    pass
+                else:
+                    obj_id = line.split('"')[1]
+                    key = class_name + "." + obj_id
+                    value = objects.get(key)
+                    if value is None:
+                        print("** no instance found **")
+                    else:
+                        print(value)
+            elif method == "destroy":
+                if '"' not in line:
+                    pass
+                else:
+                    obj_id = line.split('"')[1]
+                    key = class_name + "." + obj_id
+                    value = objects.get(key)
+                    if value is None:
+                        print("** no instance found **")
+                    else:
+                        objects.pop(key, None)
+                        models.storage.save()
+
+    def do_Review(self, line):
+        """Retrieve all instances of Review class.
+        Ex: $ Review.all()
+        """
+        objects = models.storage.all()
+        class_name = "Review"
+        method = line.split(".")[1].split("(")[0]
+
+        if "(" and ")" in line:
+            if method == "all":
+                HBNBCommand.do_all(HBNBCommand, class_name)
+            elif method == "count":
+                counter = 0
+                for key in objects:
+                    if key.split(".")[0] == class_name:
+                        counter += 1
+                print(counter)
+            elif method == "show":
+                if '"' not in line:
+                    pass
+                else:
+                    obj_id = line.split('"')[1]
+                    key = class_name + "." + obj_id
+                    value = objects.get(key)
+                    if value is None:
+                        print("** no instance found **")
+                    else:
+                        print(value)
+            elif method == "destroy":
+                if '"' not in line:
+                    pass
+                else:
+                    obj_id = line.split('"')[1]
+                    key = class_name + "." + obj_id
+                    value = objects.get(key)
+                    if value is None:
+                        print("** no instance found **")
+                    else:
+                        objects.pop(key, None)
+                        models.storage.save()
+
+    def do_State(self, line):
+        """Retrieve all instances of State class.
+        Ex: $ State.all()
+        """
+        objects = models.storage.all()
+        class_name = "State"
+        method = line.split(".")[1].split("(")[0]
+
+        if "(" and ")" in line:
+            if method == "all":
+                HBNBCommand.do_all(HBNBCommand, class_name)
+            elif method == "count":
+                counter = 0
+                for key in objects:
+                    if key.split(".")[0] == class_name:
+                        counter += 1
+                print(counter)
+            elif method == "show":
+                if '"' not in line:
+                    pass
+                else:
+                    obj_id = line.split('"')[1]
+                    key = class_name + "." + obj_id
+                    value = objects.get(key)
+                    if value is None:
+                        print("** no instance found **")
+                    else:
+                        print(value)
+            elif method == "destroy":
+                if '"' not in line:
+                    pass
+                else:
+                    obj_id = line.split('"')[1]
+                    key = class_name + "." + obj_id
+                    value = objects.get(key)
+                    if value is None:
+                        print("** no instance found **")
+                    else:
+                        objects.pop(key, None)
+                        models.storage.save()
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
