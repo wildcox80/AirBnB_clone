@@ -1,8 +1,15 @@
 #!/usr/bin/python3
 """This is the console for the Holberton HNBN project"""
 
-
 import cmd
+from models.base_model import BaseModel
+from models import storage
+from models.city import City
+from models.place import Place
+from models.state import State
+from models.amenity import Amenity
+from models.review import Review
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
@@ -10,7 +17,15 @@ class HBNBCommand(cmd.Cmd):
        prompt - The start prompt for the HBNB console
        group - contains all the classes used in the project
     """
-    prompt = "(hbnb) "
+    prompt = "(hbnb)"
+    __list_class = [
+        'BaseModel',
+        'User',
+        'State',
+        'City',
+        'Amenity',
+        'Place',
+        'Review']
 
     def do_EOF(self, line):
         """Executes the EOF (Ctrl -D/ Ctrl-Z) commands on console"""
@@ -35,11 +50,11 @@ class HBNBCommand(cmd.Cmd):
 
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in HBNBCommand.__classes:
+        elif args[0] not in self.__list_class:
             print("** class doesn't exist **")
         else:
             new_inst = eval(args[0] + '()')
-            models.storage.save()
+            storage.save()
             print(new_inst.id)
 
     def do_show(self, line):
@@ -48,11 +63,11 @@ class HBNBCommand(cmd.Cmd):
         Ex: $ show BaseModel 1234-1234-1234
         """
         args = line.split()
-        objects = models.storage.all()
+        objects = storage.all()
 
         if len(args) == 0:
             print('** class name missing **')
-        elif args[0] not in HBNBCommand.__classes:
+        elif args[0] not in self.__list_class:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print('** instance id missing **')
@@ -69,11 +84,11 @@ class HBNBCommand(cmd.Cmd):
         Ex: $ destroy BaseModel 1234-1234-1234
         """
         args = line.split()
-        objects = models.storage.all()
+        objects = storage.all()
 
         if len(args) == 0:
             print('** class name missing **')
-        elif args[0] not in HBNBCommand.__classes:
+        elif args[0] not in self.__list_class:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print('** instance id missing **')
@@ -81,7 +96,7 @@ class HBNBCommand(cmd.Cmd):
             key_find = args[0] + '.' + args[1]
             if key_find in objects.keys():
                 objects.pop(key_find, None)
-                models.storage.save()
+                storage.save()
             else:
                 print('** no instance found **')
 
@@ -91,7 +106,7 @@ class HBNBCommand(cmd.Cmd):
         Ex: $ all BaseModel
         """
         args = line.split()
-        objects = models.storage.all()
+        objects = storage.all()
         new_list = []
 
         if len(args) == 0:
@@ -99,7 +114,7 @@ class HBNBCommand(cmd.Cmd):
                 new_list.append(obj.__str__())
             print(new_list)
 
-        elif args[0] not in HBNBCommand.__classes:
+        elif args[0] not in self.__list_class:
             print("** class doesn't exist **")
 
         else:
@@ -116,12 +131,12 @@ class HBNBCommand(cmd.Cmd):
         Ex: $ update BaseModel <valid id> attrib value
         """
         args = line.split()
-        objects = models.storage.all()
+        objects = storage.all()
 
         if len(args) == 0:
             print("** class name missing **")
 
-        elif args[0] not in HBNBCommand.__classes:
+        elif args[0] not in self.__list_class:
             print("** class doesn't exist **")
 
         elif len(args) == 1:
@@ -142,7 +157,7 @@ class HBNBCommand(cmd.Cmd):
                 return
 
             setattr(obj, args[2], args[3].lstrip('"').rstrip('"'))
-            models.storage.save()
+            storage.save()
 
 
 if __name__ == "__main__":
