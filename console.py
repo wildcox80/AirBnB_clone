@@ -159,12 +159,6 @@ class HBNBCommand(cmd.Cmd):
             setattr(obj, args[2], args[3].lstrip('"').rstrip('"'))
             storage.save()
 
-    @staticmethod
-    def count(class_name):
-        """Retrieve the number of instances of a class: <class name>.count()"""
-        objects = storage.get_objects(class_name[0])
-        length = len(objects)
-        print(length)
 
 
 if __name__ == "__main__":
