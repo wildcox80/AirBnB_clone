@@ -165,20 +165,6 @@ class HBNBCommand(cmd.Cmd):
         if len(split_line) > 1:
             if split_line[1] == "count()":
                 self.do_count(split_line[0])
-            if split_line[1] == "all()":
-                self.do_all(split_line[0])
-            if split_line[1][:4] == "show":
-                args = self.splinter(split_line[1])
-                clas = split_line[0]
-                self.do_show(clas + " " + args)
-            if split_line[1][:7] == "destroy":
-                args = self.splinter(split_line[1])
-                clas = split_line[0]
-                self.do_destroy(clas + " " + args)
-            if split_line[1][:6] == "update":
-                args = self.splinter(split_line[1])
-                clas = split_line[0]
-                self.do_update(clas + " " + args)
         else:
             cmd.Cmd.default(self, line)
 
