@@ -11,7 +11,7 @@ from models.state import State
 
 
 
-class FileStorage:
+class FileStorage():
     """Private class attributes for Class FileStorage"""
     __file_path = 'file.json'
     __objects = {}
