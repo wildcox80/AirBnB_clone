@@ -163,8 +163,6 @@ class HBNBCommand(cmd.Cmd):
         """ Dafault function """
         split_line = line.split('.')
         if len(split_line) > 1:
-            if split_line[1] == "count()":
-                self.do_count(split_line[0])
             if split_line[1] == "all()":
                 self.do_all(split_line[0])
         else:
