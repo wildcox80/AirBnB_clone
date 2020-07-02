@@ -8,3 +8,7 @@ class Review(BaseModel):
     place_id = ""  # Place.id format
     user_id = ""  # User.id format
     text = ""
+
+    def __init__(self, *args, **kwargs):
+        """Review class constructor"""
+        super().__init__(*args, **kwargs)

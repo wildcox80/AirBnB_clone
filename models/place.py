@@ -4,7 +4,7 @@ from models.base_model import BaseModel
 
 
 class Place(BaseModel):
-    """strcuture of the db"""
+    """structure of the db"""
     city_id = ""  # City.id format
     user_id = ""  # User.id format
     name = ""
@@ -16,3 +16,7 @@ class Place(BaseModel):
     latitude = 0.0
     longitude = 0.0
     amenity_ids = ""  # Amenity.id format
+
+    def __init__(self, *args, **kwargs):
+        """Place class constructor"""
+        super().__init__(*args, **kwargs)
