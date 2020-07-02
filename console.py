@@ -159,42 +159,14 @@ class HBNBCommand(cmd.Cmd):
             setattr(obj, args[2], args[3].lstrip('"').rstrip('"'))
             storage.save()
 
-    def splinter(self, line):
-        sp = line
-        sp = sp.replace("\"", "")
-        sp = sp.replace("show(", "")
-        sp = sp.replace("destroy(", "")
-        sp = sp.replace("update(", "")
-        sp = sp.replace(")", "")
-        sp = sp.replace(",", "")
-        sp = sp.split()
-        args = ""
-        for i in range(len(sp)):
-            args += sp[i]
-            if i - 1 != range(len(sp)):
-                args += " "
-        return (args)
-
     def default(self, line):
         """ Dafault function """
         split_line = line.split('.')
         if len(split_line) > 1:
             if split_line[1] == "count()":
                 self.do_count(split_line[0])
-            elif split_line[1] == "all()":
+            if split_line[1] == "all()":
                 self.do_all(split_line[0])
-            elif split_line[1][:4] == "show":
-                args = self.splinter(split_line[1])
-                clas = split_line[0]
-                self.do_show(clas + " " + args)
-            elif split_line[1][:7] == "destroy":
-                args = self.splinter(split_line[1])
-                clas = split_line[0]
-                self.do_destroy(clas + " " + args)
-            elif split_line[1][:6] == "update":
-                args = self.splinter(split_line[1])
-                clas = split_line[0]
-                self.do_update(clas + " " + args)
         else:
             cmd.Cmd.default(self, line)
 
