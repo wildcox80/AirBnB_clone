@@ -169,7 +169,6 @@ class HBNBCommand(cmd.Cmd):
                 self.do_all(split_line[0])
         else:
             cmd.Cmd.default(self, line)
-
-
+            
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
