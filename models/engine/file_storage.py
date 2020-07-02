@@ -10,7 +10,6 @@ from models.review import Review
 from models.state import State
 
 
-
 class FileStorage():
     """Private class attributes for Class FileStorage"""
     __file_path = 'file.json'
