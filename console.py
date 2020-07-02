@@ -159,6 +159,22 @@ class HBNBCommand(cmd.Cmd):
             setattr(obj, args[2], args[3].lstrip('"').rstrip('"'))
             storage.save()
 
+    def splinter(self, line):
+        sp = line
+        sp = sp.replace("\"", "")
+        sp = sp.replace("show(", "")
+        sp = sp.replace("destroy(", "")
+        sp = sp.replace("update(", "")
+        sp = sp.replace(")", "")
+        sp = sp.replace(",", "")
+        sp = sp.split()
+        args = ""
+        for i in range(len(sp)):
+            args += sp[i]
+            if i - 1 != range(len(sp)):
+                args += " "
+        return (args)
+
     def default(self, line):
         """ Dafault function """
         split_line = line.split('.')
