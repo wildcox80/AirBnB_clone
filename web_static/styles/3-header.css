@@ -7,10 +7,8 @@ header {
 }
 
 header .logo {
-    display: flex;
-    align-items: center;
 	background: url("../images/logo_airbnb.png") no-repeat;
-	margin: 0;
+	background-position: 5px;
 	margin-left: 20px;
 	height: 100%;
 }
